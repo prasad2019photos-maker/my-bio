@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Profile } from "@/lib/content";
+import { SERVICE_WEBSITE_URL } from "@/lib/config";
 
 function Available({ label, isAvailable }: { label: string; isAvailable?: boolean }) {
   return (
@@ -51,6 +52,12 @@ export function Hero({ profile }: { profile: Profile | null }) {
               className="eyebrow inline-flex min-h-[48px] items-center gap-2 border border-foreground bg-foreground px-6 text-background transition-colors duration-300 hover:bg-transparent hover:text-foreground"
             >
               VIEW MY WORK <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href={SERVICE_WEBSITE_URL}
+              className="eyebrow inline-flex min-h-[48px] items-center gap-2 border border-foreground bg-foreground px-6 text-background transition-colors duration-300 hover:bg-transparent hover:text-foreground"
+            >
+              LET&apos;S TALK <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
             {profile?.personal_site_url ? (
               <a
