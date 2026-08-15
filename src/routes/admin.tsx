@@ -32,10 +32,9 @@ function ThemeToggle() {
   const [theme, setTheme] = useState<"dark" | "light" | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(dark ? "dark" : "light");
-    document.documentElement.classList.toggle("dark", dark);
+    // Always start admin in light theme on initial load.
+    setTheme("light");
+    document.documentElement.classList.remove("dark");
   }, []);
 
   const toggleTheme = () => {

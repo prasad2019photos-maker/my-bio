@@ -52,17 +52,12 @@ export function Navbar({ email, homeHref = "/" }: { email: string; homeHref?: st
     return () => document.removeEventListener("mousedown", onDown);
   }, [desktopOpen]);
 
-  // Theme init
+  // Theme init — always start in light theme on load
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored) {
-      setTheme(stored);
-      document.documentElement.classList.toggle("dark", stored === "dark");
-    } else {
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
-      document.documentElement.classList.toggle("dark", prefersDark);
-    }
+    // Ignore stored preference and OS setting on initial load so the site always loads light.
+    setTheme("light");
+    // Ensure dark class is not present initially.
+    document.documentElement.classList.remove("dark");
   }, []);
 
   const toggleTheme = () => {
