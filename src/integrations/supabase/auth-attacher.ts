@@ -4,12 +4,31 @@ import { supabase } from "./client";
 
 // Must be registered as a global `functionMiddleware` in `src/start.ts`; otherwise
 // the browser never attaches the bearer token to serverFn RPCs.
+//
+// Performance note: calling `supabase.auth.getSession()` synchronously before each
+// server function call can trigger repeated network requests and delay interactivity
+// when many serverFns run on initial load. Cache the access token and subscribe to
+// auth state changes so middleware can attach headers synchronously.
+let _cachedAccessToken: string | null = null;
+
+if (typeof window !== "undefined") {
+  // Initialize cached token once on module load.
+  supabase.auth.getSession().then(({ data }) => {
+    _cachedAccessToken = data.session?.access_token ?? null;
+  });
+
+  // Keep the cached token up-to-date when auth state changes.
+  const { data: _sub } = supabase.auth.onAuthStateChange((_event, session) => {
+    _cachedAccessToken = session?.access_token ?? null;
+  });
+
+  // It's OK that we don't unsubscribe here — this module lives for the lifetime
+  // of the SPA and the subscription keeps the cache fresh.
+}
+
 export const attachSupabaseAuth = createMiddleware({ type: "function" }).client(
-  async ({ next }) => {
-    const { data } = await supabase.auth.getSession();
-    const token = data.session?.access_token;
-    return next({
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    });
+  ({ next }) => {
+    const headers = _cachedAccessToken ? { Authorization: `Bearer ${_cachedAccessToken}` } : {};
+    return next({ headers });
   },
 );
