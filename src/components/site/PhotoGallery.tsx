@@ -185,6 +185,48 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
               );
             })}
           </div>
+
+          {/* Additional rows for any remaining photos beyond the first 15. */}
+          {displayedPhotos.length > 15 && (
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-6 md:gap-5">
+              {displayedPhotos.slice(15).map((photo, i) => {
+                const idx = 15 + i;
+                return (
+                  <Reveal key={photo.id} delay={(idx % 3) * 70} className="col-span-1">
+                    <button
+                      type="button"
+                      onClick={() => setIndex(idx)}
+                      className="group block w-full text-left"
+                      aria-label={`Open photo${photo.title ? `: ${photo.title}` : ""}`}
+                    >
+                      <div
+                        className={cn(
+                          "relative overflow-hidden bg-subtle",
+                          ASPECT[photo.aspect] ?? "aspect-4/5",
+                        )}
+                      >
+                        <img
+                          src={photo.image_url}
+                          alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                        />
+                      </div>
+                      <div className="mt-3 flex items-baseline justify-between gap-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
+                        <span className="text-xs font-semibold tracking-wide uppercase">
+                          {photo.title ?? photo.category}
+                        </span>
+                        <span className="text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
+                          {photo.location ?? photo.category}
+                        </span>
+                      </div>
+                    </button>
+                  </Reveal>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
