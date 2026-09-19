@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { uploadImage } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { OptimizedImage } from "@/components/site/OptimizedImage";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -52,7 +53,7 @@ export function Toggle({
       type="button"
       onClick={() => onChange(!checked)}
       className={cn(
-        "eyebrow inline-flex min-h-[40px] items-center gap-2 border px-3 transition-colors",
+        "eyebrow inline-flex min-h-10 items-center gap-2 border px-3 transition-colors",
         checked
           ? "border-foreground bg-foreground text-background"
           : "border-border text-muted-foreground",
@@ -76,7 +77,7 @@ export function AdminButton({
     <button
       {...props}
       className={cn(
-        "eyebrow inline-flex min-h-[44px] items-center justify-center gap-2 px-4 transition-colors disabled:opacity-50",
+        "eyebrow inline-flex min-h-11 items-center justify-center gap-2 px-4 transition-colors disabled:opacity-50",
         variant === "solid" &&
           "border border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground",
         variant === "outline" && "border border-border hover:bg-foreground hover:text-background",
@@ -105,7 +106,14 @@ export function ImageInput({
       <div className="flex items-start gap-4">
         <div className="h-24 w-24 shrink-0 overflow-hidden border border-border bg-subtle">
           {value ? (
-            <img src={value} alt="" className="h-full w-full object-cover" />
+            <OptimizedImage
+              src={value}
+              alt=""
+              className="h-full w-full object-cover"
+              width={200}
+              quality={75}
+              sizes="96px"
+            />
           ) : (
             <span className="flex h-full w-full items-center justify-center text-[10px] text-muted-foreground">
               NONE

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/LinksContactFooter";
+import { OptimizedImage } from "@/components/site/OptimizedImage";
 import { projectBySlugQuery, settingsQuery, linksQuery, profileQuery } from "@/lib/content";
 
 export const Route = createFileRoute("/work/$slug")({
@@ -70,11 +71,14 @@ function ProjectDetail() {
 
             {project.cover_image_url && (
               <div className="mt-10 aspect-16/9 w-full overflow-hidden bg-subtle">
-                <img
+                <OptimizedImage
                   src={project.cover_image_url}
                   alt={project.title}
                   className="h-full w-full object-cover"
-                  decoding="async"
+                  width={1600}
+                  quality={85}
+                  sizes="(max-width: 767px) 100vw, 1600px"
+                  priority
                 />
               </div>
             )}
@@ -112,12 +116,13 @@ function ProjectDetail() {
               <div className="mt-16 space-y-6">
                 {images.map((image) => (
                   <figure key={image.id}>
-                    <img
+                    <OptimizedImage
                       src={image.image_url}
                       alt={image.caption ?? project.title}
-                      loading="lazy"
-                      decoding="async"
                       className="w-full bg-subtle object-cover"
+                      width={1600}
+                      quality={82}
+                      sizes="(max-width: 767px) 100vw, 1600px"
                     />
                     {image.caption && (
                       <figcaption className="eyebrow mt-3 text-muted-foreground">

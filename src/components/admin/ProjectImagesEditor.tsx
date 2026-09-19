@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { projectImagesQuery, uploadImage } from "@/lib/content";
 import { AdminButton, Field } from "./ui";
+import { OptimizedImage } from "@/components/site/OptimizedImage";
 
 export function ProjectImagesEditor({ projectId }: { projectId: string }) {
   const queryClient = useQueryClient();
@@ -44,10 +45,13 @@ export function ProjectImagesEditor({ projectId }: { projectId: string }) {
         <ul className="mt-4 flex flex-wrap gap-3">
           {images.map((image) => (
             <li key={image.id} className="relative">
-              <img
+              <OptimizedImage
                 src={image.image_url}
                 alt=""
                 className="h-24 w-32 border border-border object-cover"
+                width={320}
+                quality={75}
+                sizes="128px"
               />
               <AdminButton
                 variant="outline"

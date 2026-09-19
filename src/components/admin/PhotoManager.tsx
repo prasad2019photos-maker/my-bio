@@ -14,6 +14,7 @@ import {
   TextInput,
   Toggle,
 } from "./ui";
+import { OptimizedImage } from "@/components/site/OptimizedImage";
 
 type Draft = Partial<Photo> & { image_url: string };
 
@@ -197,10 +198,13 @@ export function PhotoManager() {
       <ul className="divide-y divide-border border-t border-border">
         {photos.map((photo, i) => (
           <li key={photo.id} className="flex flex-wrap items-center gap-4 py-4">
-            <img
+            <OptimizedImage
               src={photo.image_url}
               alt=""
               className="h-16 w-16 shrink-0 border border-border object-cover"
+              width={160}
+              quality={75}
+              sizes="64px"
             />
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-semibold uppercase">

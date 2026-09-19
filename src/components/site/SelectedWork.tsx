@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import type { Project } from "@/lib/content";
 import { SERVICE_WEBSITE_URL } from "@/lib/config";
+import { OptimizedImage } from "./OptimizedImage";
 
 export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
@@ -40,12 +41,13 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
                   <div className="relative">
                     <div className="aspect-16/9 w-full overflow-hidden bg-subtle">
                       {project.cover_image_url ? (
-                        <img
+                        <OptimizedImage
                           src={project.cover_image_url}
                           alt={project.title}
-                          loading="lazy"
-                          decoding="async"
                           className="h-full w-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-105"
+                          width={800}
+                          quality={78}
+                          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
                         />
                       ) : (
                         <span className="eyebrow flex h-full w-full items-center justify-center text-muted-foreground">

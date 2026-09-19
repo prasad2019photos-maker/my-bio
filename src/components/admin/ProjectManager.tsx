@@ -15,6 +15,7 @@ import {
   Toggle,
 } from "./ui";
 import { ProjectImagesEditor } from "./ProjectImagesEditor";
+import { OptimizedImage } from "@/components/site/OptimizedImage";
 
 type Draft = Partial<Project> & { title: string; slug: string };
 
@@ -221,7 +222,14 @@ export function ProjectManager() {
           <li key={project.id} className="flex flex-wrap items-center gap-4 py-4">
             <div className="h-16 w-24 shrink-0 border border-border bg-subtle">
               {project.cover_image_url && (
-                <img src={project.cover_image_url} alt="" className="h-full w-full object-cover" />
+                <OptimizedImage
+                  src={project.cover_image_url}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  width={400}
+                  quality={75}
+                  sizes="96px"
+                />
               )}
             </div>
             <div className="min-w-0 flex-1">

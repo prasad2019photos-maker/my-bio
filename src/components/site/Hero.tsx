@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Profile } from "@/lib/content";
 import { SERVICE_WEBSITE_URL } from "@/lib/config";
+import { OptimizedImage } from "./OptimizedImage";
 
 function Available({ label, isAvailable }: { label: string; isAvailable?: boolean }) {
   return (
@@ -75,12 +76,14 @@ export function Hero({ profile }: { profile: Profile | null }) {
         <div className="flex-none w-[clamp(120px,34vw,520px)]">
           <div className="relative aspect-4/5 w-full overflow-hidden border border-border bg-subtle">
             {profile?.hero_image_url ? (
-              <img
+              <OptimizedImage
                 src={profile.hero_image_url}
                 alt="Photograph by Prsad"
                 className="h-full w-full object-cover"
-                fetchPriority="high"
-                decoding="async"
+                width={800}
+                quality={85}
+                sizes="(max-width: 767px) 34vw, 520px"
+                priority
               />
             ) : (
               <span className="eyebrow absolute inset-0 flex items-center justify-center text-muted-foreground">

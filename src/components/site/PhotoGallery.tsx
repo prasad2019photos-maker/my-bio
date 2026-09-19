@@ -3,6 +3,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import type { Photo } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { OptimizedImage } from "./OptimizedImage";
 
 const ASPECT: Record<string, string> = {
   portrait: "aspect-4/5",
@@ -84,12 +85,13 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
                         ASPECT[photo.aspect] ?? "aspect-4/5",
                       )}
                     >
-                      <img
+                      <OptimizedImage
                         src={photo.image_url}
                         alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
-                        loading="lazy"
-                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                        width={800}
+                        quality={78}
+                        sizes="(max-width: 767px) 50vw, 25vw"
                       />
                     </div>
                     <div className="mt-3 flex items-baseline justify-between gap-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
@@ -124,12 +126,13 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
                         ASPECT[photo.aspect] ?? "aspect-4/5",
                       )}
                     >
-                      <img
+                      <OptimizedImage
                         src={photo.image_url}
                         alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
-                        loading="lazy"
-                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                        width={800}
+                        quality={78}
+                        sizes="(max-width: 767px) 50vw, 16.66vw"
                       />
                     </div>
                     <div className="mt-3 flex items-baseline justify-between gap-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
@@ -164,12 +167,13 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
                         ASPECT[photo.aspect] ?? "aspect-4/5",
                       )}
                     >
-                      <img
+                      <OptimizedImage
                         src={photo.image_url}
                         alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
-                        loading="lazy"
-                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                        width={800}
+                        quality={78}
+                        sizes="(max-width: 767px) 50vw, 20vw"
                       />
                     </div>
                     <div className="mt-3 flex items-baseline justify-between gap-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
@@ -205,12 +209,13 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
                           ASPECT[photo.aspect] ?? "aspect-4/5",
                         )}
                       >
-                        <img
+                        <OptimizedImage
                           src={photo.image_url}
                           alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
-                          loading="lazy"
-                          decoding="async"
                           className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                          width={800}
+                          quality={78}
+                          sizes="(max-width: 767px) 50vw, 16.66vw"
                         />
                       </div>
                       <div className="mt-3 flex items-baseline justify-between gap-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
@@ -311,10 +316,14 @@ export function PhotoLightbox({
       </div>
 
       <div className="flex min-h-0 flex-1 items-center justify-center px-4 py-6 md:px-16">
-        <img
+        <OptimizedImage
           src={photo.image_url}
           alt={photo.title ?? photo.caption ?? "Photograph by Prsad"}
           className="max-h-full max-w-full object-contain"
+          width={1600}
+          quality={85}
+          sizes="100vw"
+          loading="eager"
         />
       </div>
 
